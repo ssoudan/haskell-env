@@ -1,0 +1,17 @@
+
+FROM haskell:7.8
+
+MAINTAINER sebastien.soudan@gmail.com
+
+RUN apt-get install -y patch git emacs23-nox 
+
+RUN cabal update
+
+# # Add installed cabal executables to PATH
+ENV PATH /root/.cabal/bin:$PATH
+
+RUN mkdir -p /home/
+
+# # Default Command for Container
+WORKDIR /home/
+

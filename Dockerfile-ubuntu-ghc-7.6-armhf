@@ -1,0 +1,23 @@
+
+FROM armv7/armhf-ubuntu:latest
+
+MAINTAINER sebastien.soudan@gmail.com
+
+RUN apt-get update 
+
+RUN apt-get install -y ghc cabal-install 
+
+RUN apt-get install -y patch git emacs24-nox 
+
+RUN cabal update
+
+RUN cabal install ghc-mod hoogle hlint pointfree
+
+# # Add installed cabal executables to PATH
+ENV PATH /root/.cabal/bin:$PATH
+
+RUN mkdir -p /home/
+
+# # Default Command for Container
+WORKDIR /home/
+

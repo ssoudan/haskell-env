@@ -1,0 +1,34 @@
+
+FROM armv7/armhf-archlinux:latest
+
+MAINTAINER sebastien.soudan@gmail.com
+
+RUN pacman -Syyu --noconfirm
+
+RUN pacman -S --noconfirm ghc cabal-install git patch
+
+# downgrade llvm to 3.4 as 3.5 is not supported by GHC
+RUN cd /root && curl http://rollback.archlinuxarm.org/packages/l/llvm/llvm-3.4.2-1.1-armv7h.pkg.tar.xz -o llvm-3.4.2-1.1-armv7h.pkg.tar.xz
+RUN cd /root && curl http://rollback.archlinuxarm.org/packages/l/llvm-libs/llvm-libs-3.4.2-1.1-armv7h.pkg.tar.xz -o llvm-libs-3.4.2-1.1-armv7h.pkg.tar.xz
+RUN cd /root && pacman --noconfirm -U llvm-3.4.2-1.1-armv7h.pkg.tar.xz llvm-libs-3.4.2-1.1-armv7h.pkg.tar.xz
+RUN cd /root && rm llvm-3.4.2-1.1-armv7h.pkg.tar.xz llvm-libs-3.4.2-1.1-armv7h.pkg.tar.xz
+
+# generating locales (see https://github.com/haskell/cabal/issues/1883) 
+RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
+RUN locale-gen
+
+ENV LANG en_US.UTF-8
+
+RUN cabal update
+
+RUN cabal install happy 
+RUN cabal install ghc-mod hoogle hlint pointfree cabal-install
+
+# # Add installed cabal executables to PATH
+ENV PATH /root/.cabal/bin:$PATH
+
+RUN mkdir -p /home/
+
+# # Default Command for Container
+WORKDIR /home/
+
