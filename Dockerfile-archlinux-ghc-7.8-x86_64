@@ -5,6 +5,8 @@ MAINTAINER sebastien.soudan@gmail.com
 
 RUN pacman -Syyu --noconfirm
 
+RUN pacman-db-upgrade
+
 RUN pacman -S --noconfirm ghc cabal-install git patch
 
 # generating locales (see https://github.com/haskell/cabal/issues/1883) 
