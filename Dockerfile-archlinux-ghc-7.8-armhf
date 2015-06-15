@@ -25,7 +25,7 @@ RUN cabal install happy
 RUN cabal install ghc-mod hoogle hlint pointfree cabal-install
 
 # # Add installed cabal executables to PATH
-ENV PATH /root/.cabal/bin:$PATH
+ENV PATH /.cabal/bin:$PATH
 
 RUN mkdir -p /home/
 
