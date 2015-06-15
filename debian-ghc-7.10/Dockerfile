@@ -7,9 +7,9 @@ ADD experimental.list /etc/apt/sources.list.d/experimental.list
 
 ADD prefs /etc/apt/preferences.d/prefs
 
-RUN apt-get update ; apt-get install -y ghc=7.10.1-5
+RUN apt-get update ; apt-get install -y ghc=7.10.1-5 cabal-install=1.22.0.1
 
-RUN cabal update ; cabal install cabal-install
+RUN cabal update 
 
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
