@@ -1,0 +1,30 @@
+
+FROM base/archlinux:latest
+
+MAINTAINER sebastien.soudan@gmail.com
+
+RUN pacman -Syyu --noconfirm
+
+RUN pacman-db-upgrade
+
+RUN pacman -S --noconfirm ghc cabal-install git patch
+
+# generating locales (see https://github.com/haskell/cabal/issues/1883) 
+RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
+RUN locale-gen
+
+ENV LANG en_US.UTF-8
+
+RUN cabal update
+
+RUN cabal install happy 
+RUN cabal install ghc-mod hoogle hlint pointfree cabal-install
+
+# # Add installed cabal executables to PATH
+ENV PATH /root/.cabal/bin:$PATH
+
+RUN mkdir -p /home/
+
+# # Default Command for Container
+WORKDIR /home/
+
