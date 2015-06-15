@@ -9,8 +9,7 @@ ADD prefs /etc/apt/preferences.d/prefs
 
 RUN apt-get update ; apt-get install -y ghc=7.10.1-5 cabal-install
 
-RUN apt-get install zlib1g-dev
-
+RUN apt-get install -y zlib1g-dev
 RUN cabal update ; cabal install cabal cabal-install
 
 RUN apt-get clean
