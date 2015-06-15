@@ -19,10 +19,12 @@ RUN locale-gen
 
 ENV LANG en_US.UTF-8
 
-RUN cabal update
+RUN cabal  update
 
-RUN cabal install happy 
-RUN cabal install ghc-mod hoogle hlint pointfree cabal-install
+RUN cabal install --job=1 cabal-install
+
+# RUN cabal install happy 
+RUN cabal install ghc-mod hoogle hlint pointfree 
 
 # # Add installed cabal executables to PATH
 ENV PATH /.cabal/bin:$PATH
