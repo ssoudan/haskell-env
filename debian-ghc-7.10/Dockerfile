@@ -9,7 +9,7 @@ ADD prefs /etc/apt/preferences.d/prefs
 
 RUN apt-get update ; apt-get install -y ghc=7.10.1-5 cabal-install
 
-RUN cabal update 
+RUN cabal update ; cabal install cabal cabal-install
 
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
