@@ -7,6 +7,7 @@ ADD experimental.list /etc/apt/sources.list.d/experimental.list
 
 ADD prefs /etc/apt/preferences.d/prefs
 
+ADD qemu-arm-static /usr/bin/qemu-arm-static
 RUN apt-get update ; apt-get install -y ghc=7.10.1-5 cabal-install
 
 RUN apt-get install -y zlib1g-dev
